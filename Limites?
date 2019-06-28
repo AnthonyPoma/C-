@@ -1,0 +1,96 @@
+#include "stdafx.h"
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+using namespace System;
+
+#define fil 20
+#define col 20
+
+int M[fil][col] =
+{ 
+	{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,1,0,0,0,0,1,1,0,0,0,1,1,0,0,0,1 },
+	{ 1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 } 
+};
+
+void genera_muestra_funcion(int M[][col])
+{
+	for (int i = 0; i < fil; i++)
+	{
+		for (int j = 0; j < col; j++)
+		{
+			if (M[i][j] == 1)
+			{
+				cout << char(219);
+			}
+			else
+				cout << " ";
+		}
+		cout << endl;
+	}
+}
+
+void desplazar_ficha(int M[][col])
+{
+	int jx = 9, jy = 8;
+
+	Console::SetCursorPosition(jx + 1, jy);
+	cout << char(219) << char(219);
+	Console::SetCursorPosition(jx, jy + 1);
+	cout << char(219) << char(219) << char(219);
+
+	while (1)
+	{
+		if (kbhit())
+		{
+			int tecla = _getch();
+			if (tecla == 224)
+			{
+				tecla = _getch();
+				Console::SetCursorPosition(jx + 1, jy);
+				cout << " " << " ";
+				Console::SetCursorPosition(jx, jy + 1);
+				cout << " " << " " << " ";
+				switch (tecla)
+				{
+					case 80: if (M[jy + 1][jx] != 1) jy++; break; //abajo
+					case 72: if (M[jy - 1][jx] != 1) jy--; break; //arriba
+					case 75: if (M[jy][jx - 1] != 1) jx--; break; //izquierda
+					case 77: if (M[jy][jx + 1] != 1) jx++; break; //derecha
+				}
+				Console::SetCursorPosition(jx + 1, jy);
+				cout << char(219) << char(219);
+				Console::SetCursorPosition(jx, jy + 1);
+				cout << char(219) << char(219) << char(219);
+			}
+		}
+	};
+}
+
+int main()
+{
+	genera_muestra_funcion(M);
+	desplazar_ficha(M);
+
+	_getch();
+	return 0;
+}
